@@ -165,6 +165,7 @@ function mouseButton(ev, event, i, j) {
                 openModal(msg)
                 gSmile.innerText = LOSE
                 clearInterval(gInterval)
+                return
             }
         }
     } else {
