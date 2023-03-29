@@ -1,16 +1,19 @@
 'use strict'
 
-
-var gLevel = {
-    SIZE: 4,
-    MINES: 2
-}
-
 var gBoard
 const bomb = '💣'
 
+var gLevel = {
+    SIZE: 5,
+    MINES: 4
+}
 
-
+var gGame = {
+    isOn:false,
+    shownCount:0,
+    markedCount:0,
+    secsPassed:0
+}
 
 
 function onInit() {
@@ -32,7 +35,7 @@ function buildBoard(size) {
                 minesAroundCount: 0,
                 isShown: false,
                 isMine: false,
-                isMarked: true
+                isMarked: false
             }
             board[i][j] = cell
         }
@@ -53,6 +56,7 @@ function buildBoard(size) {
         for (j = 0; j < size; j++) {
             if (board[i][j].isMine === true) continue
             board[i][j].minesAroundCount = setMinesNegsCount(board, i, j)
+            // if (board[i][j].minesAroundCount === 0) board[i][j].minesAroundCount = ''
         }
     }
 
@@ -69,12 +73,13 @@ function renderBoard(mat, selector) {
         for (var j = 0; j < mat[0].length; j++) {
 
             const cell = mat[i][j]
-            if (cell.isMine === true) {
-                var className = `cell bomb`
-            } else {
-                var className = 'cell regular'
-            }
-            strHTML += `<td class="${className}" onclick="onCellClicked(this)">${cell.minesAroundCount}</td>`
+            const className = `cell cell-${i}-${j}`
+            // if (cell.isMine === true) {
+            //     var className = `cell bomb`
+            // } else {
+            //     var className = 'cell regular'
+            // }
+            strHTML += `<td class="${className}" onmousedown="mouseButton(this, event,${i}, ${j})">${cell.minesAroundCount}</td>`
         }
         strHTML += '</tr>'
     }
@@ -82,6 +87,33 @@ function renderBoard(mat, selector) {
 
     const elContainer = document.querySelector(selector)
     elContainer.innerHTML = strHTML
+}
+
+function mouseButton(ev, event, i, j) {
+    console.log(event.button)
+    console.log(ev)
+    if (event.button === 0) {
+        ev.style.textIndent = "0px"
+        if (ev.innerText === bomb) {
+            openModal()
+        }
+    } else {
+        if (event.button === 2 && ev.style.textIndent !== "0px") {
+            ev.style.textIndent = "0px"
+            ev.innerText = '🚩'
+            // console.log(event)
+        } else if (ev.innerText === '🚩') {
+            ev.style.textIndent = "-9999px"
+            console.log('hello')
+            ev.innerText = gBoard[i][j].minesAroundCount
+        }
+    }
+}
+
+function renderCell(location, value) {
+    // Select the elCell and set the value
+    const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
+    elCell.innerHTML = value
 }
 
 
@@ -100,12 +132,18 @@ function setMinesNegsCount(board, rowIdx, colIdx) {
 }
 
 
-function onCellClicked(ev) {
-    ev.style.textIndent = "0px"
-    if (ev.innerText === bomb) {
-        openModal()
-    }
-}
+// function onCellClicked(ev) {
+//     if (ev.innerText === '🚩') {
+//         ev.innerText === '🚩'
+//     }
+//     else {
+//         ev.style.textIndent = "0px"
+//         if (ev.innerText === bomb) {
+//             openModal()
+//         }
+//     }
+// }
+
 
 
 function openModal() {

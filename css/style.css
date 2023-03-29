@@ -37,7 +37,7 @@ table {
     color: black;
     font-size: 32px;
     position: absolute;
-    top: 200px;
+    /* top: 200px; */
     left: calc(50% - 150px);
   }
   

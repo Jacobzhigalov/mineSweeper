@@ -1,8 +1,5 @@
 'use strict'
 
-// var gNums
-// var gGamerPos
-
 
 function createMat(ROWS, COLS) {
     const mat = []
