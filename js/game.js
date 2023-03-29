@@ -114,7 +114,7 @@ function renderBoard(mat, selector) {
         for (var j = 0; j < mat[0].length; j++) {
             const cell = mat[i][j]
             const className = `cell cell-${i}-${j}`
-            strHTML += `<td class="${className}" onmousedown="mouseButton(this, event,${i}, ${j})">${cell.minesAroundCount}</td>`
+            strHTML += `<td class="${className}" onmousedown="clickMouse(this, event,${i}, ${j})">${cell.minesAroundCount}</td>`
         }
         strHTML += '</tr>'
     }
@@ -125,7 +125,7 @@ function renderBoard(mat, selector) {
 
 }
 
-function mouseButton(ev, event, i, j) {
+function clickMouse(ev, event, i, j) {
     if (checkVictory() === 1) return
     if (gLives === 0) return
 
