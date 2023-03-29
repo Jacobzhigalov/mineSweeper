@@ -10,6 +10,7 @@ var gLives = 3
 var gSmile
 var gInterval
 var gTime = 1
+var elMines = document.querySelector('.mines span')
 
 var gLevel = {
     SIZE: 4,
@@ -30,6 +31,7 @@ function onInit() {
     gLives = gLevel.LIVES
     gClick = 0
     closeModal()
+    elMines.innerText = gLevel.MINES
     gBoard = buildBoard(gLevel.SIZE)
     renderBoard(gBoard, '.board')
     var lives = document.querySelector('.lives span')
@@ -40,24 +42,30 @@ function onInit() {
     gSmile.innerText = GOOD_SMILE
 }
 
+
 function beginner() {
     gLevel.SIZE = 4
     gLevel.MINES = 2
     gLevel.LIVES = 2
     onInit()
 }
+
+
 function medium() {
     gLevel.SIZE = 8
     gLevel.MINES = 14
     gLevel.LIVES = 3
     onInit()
 }
+
+
 function expert() {
     gLevel.SIZE = 12
     gLevel.MINES = 32
     gLevel.LIVES = 4
     onInit()
 }
+
 
 function timer() {
     var time = document.querySelector('.time span')
@@ -136,7 +144,9 @@ function mouseButton(ev, event, i, j) {
         cell.style.textIndent = "0px"
         gClick++
     }
-    if (gBoard[i][j].minesAroundCount === 0) {
+    while (gClick < 1) return
+
+    if (event.button === 0 && gBoard[i][j].minesAroundCount === 0) {
         showNegs(gBoard, i, j)
     }
 
@@ -223,7 +233,6 @@ function checkVictory() {
         openModal(msg)
         gSmile.innerText = WIN
         clearInterval(gInterval)
-        console.table(gBoard)
         checkWin = 1
         return checkWin
     }
