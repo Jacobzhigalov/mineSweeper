@@ -12,7 +12,13 @@ var gInterval
 var gTime = 1
 var elMines = document.querySelector('.mines span')
 
-// New Scores every refresh - you can cancel it by deliting these lines
+var gLevel = {
+    SIZE: 4,
+    MINES: 2,
+    LIVES: 2
+}
+
+// New Scores every refresh - you can cancel it by deliting these lines 22-27
 localStorage.playerNameBeginner = 'Coding Academy'
 localStorage.beginnerBestTime = Infinity
 localStorage.playerNameMedium = 'Coding Academy'
@@ -24,65 +30,21 @@ document.querySelector('.beginner span').innerHTML = localStorage.playerNameBegi
 document.querySelector('.medium span').innerHTML = localStorage.playerNameMedium
 document.querySelector('.expert span').innerHTML = localStorage.playerNameExpert
 
-var gLevel = {
-    SIZE: 4,
-    MINES: 2,
-    LIVES: 2
-}
-
-var gGame = {
-    isOn: false,
-    shownCount: 0,
-    markedCount: 0,
-    secsPassed: 0
-}
-
 
 function onInit() {
     gTime = ''
-    gLives = gLevel.LIVES
     gClick = 0
-    closeModal()
-    elMines.innerText = gLevel.MINES
-    gBoard = buildBoard(gLevel.SIZE)
-    renderBoard(gBoard, '.board')
+    gLives = gLevel.LIVES
     var lives = document.querySelector('.lives span')
     lives.innerText = gLives
-    timer()
-    clearInterval(gInterval)
+    elMines.innerText = gLevel.MINES
     gSmile = document.querySelector('.smile')
     gSmile.innerText = GOOD_SMILE
-}
-
-
-function beginner() {
-    gLevel.SIZE = 4
-    gLevel.MINES = 2
-    gLevel.LIVES = 2
-    onInit()
-}
-
-
-function medium() {
-    gLevel.SIZE = 8
-    gLevel.MINES = 14
-    gLevel.LIVES = 3
-    onInit()
-}
-
-
-function expert() {
-    gLevel.SIZE = 12
-    gLevel.MINES = 32
-    gLevel.LIVES = 4
-    onInit()
-}
-
-
-function timer() {
-    var time = document.querySelector('.time span')
-    time.innerText = gTime
-    gTime++
+    closeModal()
+    timer()
+    clearInterval(gInterval)
+    gBoard = buildBoard(gLevel.SIZE)
+    renderBoard(gBoard, '.board')
 }
 
 
@@ -104,6 +66,7 @@ function buildBoard(size) {
     return board
 }
 
+
 function createBombs(i, j) {
     var countBombs = 0
     while (countBombs !== gLevel.MINES) {
@@ -117,6 +80,7 @@ function createBombs(i, j) {
         }
     }
 }
+
 
 function renderBoard(mat, selector) {
 
@@ -136,6 +100,7 @@ function renderBoard(mat, selector) {
     elContainer.innerHTML = strHTML
 
 }
+
 
 function clickMouse(ev, event, i, j) {
     if (checkVictory() === 1) return
@@ -164,7 +129,6 @@ function clickMouse(ev, event, i, j) {
 
     if (event.button === 0) {
         ev.style.textIndent = "0px"
-        //console.log(ev)
         gBoard[i][j].isShown = true
         if (ev.innerText === bomb) {
             gBoard[i][j].isMarked = true
@@ -192,11 +156,13 @@ function clickMouse(ev, event, i, j) {
             gBoard[i][j].isMarked = false
         }
     }
+
     checkVictory()
     if (checkVictory() === 1) {
         setTimeout(addBestPlayer, 500)
     }
 }
+
 
 function setMinesNegsCount(board, rowIdx, colIdx) {
     var minesCount = 0
@@ -211,6 +177,7 @@ function setMinesNegsCount(board, rowIdx, colIdx) {
     }
     return minesCount
 }
+
 
 function showNegs(board, rowIdx, colIdx) {
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
@@ -254,15 +221,9 @@ function checkVictory() {
     }
 }
 
-function checkLevel() {
-    if (gLevel.SIZE === 4) return 0
-    else if (gLevel.SIZE === 8) return 1
-    else return 2
-}
-
 
 function addBestPlayer() {
-    console.log(checkLevel())
+    gTime--
     if (checkLevel() === 0) {
         if (localStorage.beginnerBestTime > 0) {
             if (gTime < localStorage.beginnerBestTime) {

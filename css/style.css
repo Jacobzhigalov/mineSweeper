@@ -4,14 +4,12 @@ body {
     text-align: center;
 }
 
-
-
 table {
     margin: auto;
     border: 2px solid;
 }
 
-.cell{
+.cell {
     height: 30px;
     width: 30px;
     background-color: grey;
@@ -20,37 +18,29 @@ table {
     text-align: center;
     text-indent: -9999px;
     cursor: pointer;
-    
 }
 
-.cell:hover{
+.cell:hover {
     background-color: goldenrod;
-
 }
 
-.smile{
+.smile {
     cursor: pointer;
 }
 
-
 .modal {
     display: none;
-    margin:auto;
-    /* border: solid 3px grey; */
+    margin: auto;
     width: 200px;
     height: 70px;
-    /* background-color: rgb(222, 226, 228); */
     color: black;
     font-size: 10px;
-    /* position: absolute; */
-    /* top: 150px; */
-  }
-  
-  .restart-btn {
+}
+
+.restart-btn {
     margin-top: 20px;
     background-color: black;
     color: rgb(230, 221, 221);
     padding: 10px;
     cursor: pointer;
-  }
-  
+}
