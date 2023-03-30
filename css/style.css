@@ -35,15 +35,15 @@ table {
 
 .modal {
     display: none;
-    border: solid 3px grey;
-    width: 300px;
-    height: 200px;
-    background-color: rgb(222, 226, 228);
+    margin:auto;
+    /* border: solid 3px grey; */
+    width: 200px;
+    height: 70px;
+    /* background-color: rgb(222, 226, 228); */
     color: black;
-    font-size: 32px;
-    position: absolute;
-    /* top: 200px; */
-    left: calc(50% - 150px);
+    font-size: 10px;
+    /* position: absolute; */
+    /* top: 150px; */
   }
   
   .restart-btn {

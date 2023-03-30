@@ -12,6 +12,18 @@ var gInterval
 var gTime = 1
 var elMines = document.querySelector('.mines span')
 
+// New Scores every refresh - you can cancel it by deliting these lines
+localStorage.playerNameBeginner = 'Coding Academy'
+localStorage.beginnerBestTime = Infinity
+localStorage.playerNameMedium = 'Coding Academy'
+localStorage.mediumBestTime = Infinity
+localStorage.playerNameExpert = 'Coding Academy'
+localStorage.expertBestTime = Infinity
+
+document.querySelector('.beginner span').innerHTML = localStorage.playerNameBeginner
+document.querySelector('.medium span').innerHTML = localStorage.playerNameMedium
+document.querySelector('.expert span').innerHTML = localStorage.playerNameExpert
+
 var gLevel = {
     SIZE: 4,
     MINES: 2,
@@ -181,6 +193,9 @@ function clickMouse(ev, event, i, j) {
         }
     }
     checkVictory()
+    if (checkVictory() === 1) {
+        setTimeout(addBestPlayer, 500)
+    }
 }
 
 function setMinesNegsCount(board, rowIdx, colIdx) {
@@ -236,6 +251,71 @@ function checkVictory() {
         clearInterval(gInterval)
         checkWin = 1
         return checkWin
+    }
+}
+
+function checkLevel() {
+    if (gLevel.SIZE === 4) return 0
+    else if (gLevel.SIZE === 8) return 1
+    else return 2
+}
+
+
+function addBestPlayer() {
+    console.log(checkLevel())
+    if (checkLevel() === 0) {
+        if (localStorage.beginnerBestTime > 0) {
+            if (gTime < localStorage.beginnerBestTime) {
+                var playerNameBeginner = prompt('Enter your Name, winner!')
+                var elBoard = document.querySelector('.beginner span')
+                elBoard.innerText = playerNameBeginner + ' Score: ' + gTime + 'sec'
+                localStorage.playerNameBeginner = playerNameBeginner + ' Score: ' + gTime + 'sec'
+                localStorage.beginnerBestTime = gTime
+            } else return
+        }
+        else {
+            var playerNameBeginner = prompt('Enter your Name, winner!')
+            var elBoard = document.querySelector('.beginner span')
+            elBoard.innerText = playerNameBeginner + ' Score: ' + gTime + 'sec'
+            localStorage.playerNameBeginner = playerNameBeginner + ' Score: ' + gTime + 'sec'
+            localStorage.beginnerBestTime = gTime
+        }
+
+    } else if (checkLevel() === 1) {
+        if (localStorage.mediumBestTime > 0) {
+            if (gTime < localStorage.mediumBestTime) {
+                var playerNameMedium = prompt('Enter your Name, winner!')
+                var elBoard = document.querySelector('.medium span')
+                elBoard.innerText = playerNameMedium + ' Score: ' + gTime + 'sec'
+                localStorage.playerNameMedium = playerNameMedium + ' Score: ' + gTime + 'sec'
+                localStorage.mediumBestTime = gTime
+            } else return
+        }
+        else {
+            var playerNameMedium = prompt('Enter your Name, winner!')
+            var elBoard = document.querySelector('.medium span')
+            elBoard.innerText = playerNameMedium + ' Score: ' + gTime + 'sec'
+            localStorage.playerNameMedium = playerNameMedium + ' Score: ' + gTime + 'sec'
+            localStorage.mediumBestTime = gTime
+        }
+    }
+    else {
+        if (localStorage.expertBestTime > 0) {
+            if (gTime < localStorage.expertBestTime) {
+                var playerNameExpert = prompt('Enter your Name, winner!')
+                var elBoard = document.querySelector('.expert span')
+                elBoard.innerText = playerNameExpert + ' Score: ' + gTime + 'sec'
+                localStorage.playerNameExpert = playerNameExpert + ' Score: ' + gTime + 'sec'
+                localStorage.expertBestTime = gTime
+            } else return
+        }
+        else {
+            var playerNameExpert = prompt('Enter your Name, winner!')
+            var elBoard = document.querySelector('.expert span')
+            elBoard.innerText = playerNameExpert + ' Score: ' + gTime + 'sec'
+            localStorage.playerNameExpert = playerNameExpert + ' Score: ' + gTime + 'sec'
+            localStorage.expertBestTime = gTime
+        }
     }
 }
 

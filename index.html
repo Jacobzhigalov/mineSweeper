@@ -11,8 +11,7 @@
 <body oncontextmenu="return false;" onload="onInit()">
     <div class="header">
         <h1>Hello World! <br> This is MineSweeper Game <br></h1>
-        <h6>by Jacob Zhigalov</h6>
-        <h2>version 3.0</h2>
+        <h6>by Jacob Zhigalov (version 3.0)</h6>
     </div>
     <div class="difficulty">
         <h2>Choose your difficulty:</h2>
@@ -24,6 +23,12 @@
     </div>
     <br>
     <div class="smile" onclick="onInit()"> </div>
+    <div class="modal">
+        <h2 class="msg"></h3>
+        <button class="restart-btn" onclick="onInit()">Play Again</button>
+        <br>
+    </div>      
+    <br>
     <br>
     <div class="board"> </div>
     <br>
@@ -34,10 +39,11 @@
         <h4>Lives: <span>x</span></h4>
     </div>
 
-    <div class="modal">
-        <h3 class="msg"></h3>
-        <button class="restart-btn" onclick="onInit()">Play Again</button>
-    </div>
+
+    <div class="best">Best Players:</div> <br>
+    <div class="beginner">Beginner - <span></span></div> <br>
+    <div class="medium">Medium -  <span></span></div> <br>
+    <div class="expert">Expert -  <span></span></div> <br>
 
     <script src="js/utils.js"></script>
     <script src="js/game.js"> </script>
