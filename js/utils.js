@@ -32,6 +32,29 @@ function checkLevel() {
     else return 2
 }
 
+function checkLives() {
+    if (gLives === 4) {
+        var lives = document.querySelector('.lives span')
+        lives.innerText = '❤️❤️❤️❤️'
+    }
+    if (gLives === 3) {
+        var lives = document.querySelector('.lives span')
+        lives.innerText = '❤️❤️❤️'
+    }
+    if (gLives === 2) {
+        var lives = document.querySelector('.lives span')
+        lives.innerText = '❤️❤️'
+    }
+    if (gLives === 1) {
+        var lives = document.querySelector('.lives span')
+        lives.innerText = '❤️'
+    }
+    if (gLives === 0) {
+        var lives = document.querySelector('.lives span')
+        lives.innerText = '💀'
+    }
+}
+
 
 function timer() {
     var time = document.querySelector('.time span')

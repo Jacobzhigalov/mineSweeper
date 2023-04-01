@@ -12,7 +12,7 @@ table {
 .cell {
     height: 30px;
     width: 30px;
-    background-color: grey;
+    background-color: rgb(96, 94, 94);
     border-color: aqua;
     border-radius: 4px;
     text-align: center;
@@ -43,4 +43,33 @@ table {
     color: rgb(230, 221, 221);
     padding: 10px;
     cursor: pointer;
+}
+
+.shown {
+    background-color: grey;
+}
+
+.best {
+    width: 300px;
+    height: 150px;
+    background-color: rgb(132, 162, 162);
+    padding: 10px;
+    border: 5px solid;
+    margin: auto;
+}
+
+.beginner span {
+    color: rgb(255, 217, 0);
+    font-weight: bold;
+
+}
+
+.medium span {
+    color: gold;
+    font-weight: bold;
+}
+
+.expert span {
+    color: gold;
+    font-weight: bold;
 }

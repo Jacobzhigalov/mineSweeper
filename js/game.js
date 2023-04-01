@@ -6,7 +6,7 @@ const WIN = '😎'
 
 var gBoard
 var gClick = 0
-var gLives = 3
+var gLives
 var gSmile
 var gInterval
 var gTime = 1
@@ -19,11 +19,11 @@ var gLevel = {
 }
 
 // New Scores every refresh - you can cancel it by deliting these lines 22-27
-localStorage.playerNameBeginner = 'Coding Academy'
+localStorage.playerNameBeginner = 'Coding Academy😎'
 localStorage.beginnerBestTime = Infinity
-localStorage.playerNameMedium = 'Coding Academy'
+localStorage.playerNameMedium = 'Coding Academy😎'
 localStorage.mediumBestTime = Infinity
-localStorage.playerNameExpert = 'Coding Academy'
+localStorage.playerNameExpert = 'Coding Academy😎'
 localStorage.expertBestTime = Infinity
 
 document.querySelector('.beginner span').innerHTML = localStorage.playerNameBeginner
@@ -35,8 +35,7 @@ function onInit() {
     gTime = ''
     gClick = 0
     gLives = gLevel.LIVES
-    var lives = document.querySelector('.lives span')
-    lives.innerText = gLives
+    checkLives()
     elMines.innerText = gLevel.MINES
     gSmile = document.querySelector('.smile')
     gSmile.innerText = GOOD_SMILE
@@ -58,7 +57,8 @@ function buildBoard(size) {
                 minesAroundCount: 0,
                 isShown: false,
                 isMine: false,
-                isMarked: false
+                isMarked: false,
+                isCheckedForZero: false
             }
             board[i][j] = cell
         }
@@ -90,7 +90,11 @@ function renderBoard(mat, selector) {
         for (var j = 0; j < mat[0].length; j++) {
             const cell = mat[i][j]
             const className = `cell cell-${i}-${j}`
-            strHTML += `<td class="${className}" onmousedown="clickMouse(this, event,${i}, ${j})">${cell.minesAroundCount}</td>`
+            if (cell.minesAroundCount === 0) {
+                strHTML += `<td class="${className}" onmousedown="clickMouse(this, event,${i}, ${j})">${''}</td>`
+            } else {
+                strHTML += `<td class="${className}" onmousedown="clickMouse(this, event,${i}, ${j})">${cell.minesAroundCount}</td>`
+            }
         }
         strHTML += '</tr>'
     }
@@ -119,6 +123,7 @@ function clickMouse(ev, event, i, j) {
         renderBoard(gBoard, '.board')
         var cell = document.querySelector(`.cell-${i}-${j}`)
         cell.style.textIndent = "0px"
+        cell.classList.add("shown")
         gClick++
     }
     while (gClick < 1) return
@@ -129,14 +134,14 @@ function clickMouse(ev, event, i, j) {
 
     if (event.button === 0) {
         ev.style.textIndent = "0px"
+        ev.classList.add("shown")
         gBoard[i][j].isShown = true
-        if (ev.innerText === bomb) {
+        if (ev.innerText === bomb && gBoard[i][j].isMarked === false) {
             gBoard[i][j].isMarked = true
             gBoard[i][j].isShown = false
             gLives--
-            var lives = document.querySelector('.lives span')
-            lives.innerText = gLives
-            if (lives.innerText === '0') {
+            checkLives()
+            if (gLives === 0) {
                 var msg = 'GAME OVER!'
                 openModal(msg)
                 gSmile.innerText = LOSE
@@ -158,6 +163,7 @@ function clickMouse(ev, event, i, j) {
     }
 
     checkVictory()
+
     if (checkVictory() === 1) {
         setTimeout(addBestPlayer, 500)
     }
@@ -180,6 +186,7 @@ function setMinesNegsCount(board, rowIdx, colIdx) {
 
 
 function showNegs(board, rowIdx, colIdx) {
+    board[rowIdx][colIdx].isCheckedForZero = true
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i >= gLevel.SIZE) continue
         for (var j = colIdx - 1; j <= colIdx + 1; j++) {
@@ -189,6 +196,10 @@ function showNegs(board, rowIdx, colIdx) {
             currCell.isShown = true
             var cell = document.querySelector(`.cell-${i}-${j}`)
             cell.style.textIndent = "0px"
+            cell.classList.add("shown")
+            if (currCell.minesAroundCount === 0 && currCell.isCheckedForZero === false) {
+                showNegs(board, i, j)
+            }
         }
     }
 }
